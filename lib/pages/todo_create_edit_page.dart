@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_app/API/create_todo.dart';
 
 class TodoCreateEditPage extends StatefulWidget {
   const TodoCreateEditPage({super.key});
@@ -40,7 +41,10 @@ class _TodoCreateEditPageState extends State<TodoCreateEditPage> {
               ),
               const SizedBox(height: 40),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  Navigator.pop(context);
+                  await createTodo(titleController.text, detailController.text);
+                },
                 child: const Text('新規作成')
               )
             ],

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_todo_app/API/todo_service.dart';
+import 'package:flutter_todo_app/API/delete_todo.dart';
 
 class DeleteTodoDialog extends StatelessWidget {
   final String id;
