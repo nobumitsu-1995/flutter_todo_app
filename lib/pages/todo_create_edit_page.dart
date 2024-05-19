@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_app/API/create_todo.dart';
+import 'package:flutter_todo_app/API/update_todo.dart';
 import 'package:flutter_todo_app/model/todo.dart';
 
 class TodoCreateEditPage extends StatefulWidget {
@@ -18,10 +19,7 @@ class _TodoCreateEditPageState extends State<TodoCreateEditPage> {
   @override
   void initState() {
     super.initState();
-
-    setState(() {
-      isEdit = widget.todo != null ? true : false;
-    });
+    isEdit = widget.todo != null ? true : false;
 
     if (isEdit) {
       titleController.text = widget.todo!.title;
@@ -60,7 +58,18 @@ class _TodoCreateEditPageState extends State<TodoCreateEditPage> {
               ElevatedButton(
                 onPressed: () async {
                   Navigator.pop(context);
-                  await createTodo(titleController.text, detailController.text);
+                  if (isEdit) {
+                    await updateTodo(
+                      widget.todo!.id,
+                      titleController.text,
+                      detailController.text
+                    );
+                  } else {
+                    await createTodo(
+                      titleController.text,
+                      detailController.text
+                    );
+                  }
                 },
                 child: Text(isEdit ? '更新' : '新規作成')
               )
