@@ -53,6 +53,22 @@ class _TodoListPageState extends State<TodoListPage> {
                   ));
                 },
                 title: Text(todo.title),
+                trailing: Wrap(
+                  children: [
+                    IconButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(
+                            builder: (context) => const TodoCreateEditPage()
+                        ));
+                      },
+                      icon: const Icon(Icons.edit)
+                    ),
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.delete)
+                    ),
+                  ],
+                ),
               );
             }
           );
