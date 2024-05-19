@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_app/API/create_todo.dart';
+import 'package:flutter_todo_app/model/todo.dart';
 
 class TodoCreateEditPage extends StatefulWidget {
-  const TodoCreateEditPage({super.key});
+  final Todo? todo;
+  const TodoCreateEditPage({super.key, this.todo});
 
   @override
   State<TodoCreateEditPage> createState() => _TodoCreateEditPageState();
@@ -11,13 +13,28 @@ class TodoCreateEditPage extends StatefulWidget {
 class _TodoCreateEditPageState extends State<TodoCreateEditPage> {
   TextEditingController titleController = TextEditingController();
   TextEditingController detailController = TextEditingController();
+  bool isEdit = false;
+
+  @override
+  void initState() {
+    super.initState();
+
+    setState(() {
+      isEdit = widget.todo != null ? true : false;
+    });
+
+    if (isEdit) {
+      titleController.text = widget.todo!.title;
+      detailController.text = widget.todo!.detail;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('TODO作成')
+        title: Text(isEdit ? 'TODO編集' : 'TODO作成')
       ),
       body: Center(
         child: Container(
@@ -45,7 +62,7 @@ class _TodoCreateEditPageState extends State<TodoCreateEditPage> {
                   Navigator.pop(context);
                   await createTodo(titleController.text, detailController.text);
                 },
-                child: const Text('新規作成')
+                child: Text(isEdit ? '更新' : '新規作成')
               )
             ],
           ),

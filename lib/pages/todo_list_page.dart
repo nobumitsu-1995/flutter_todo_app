@@ -60,7 +60,7 @@ class _TodoListPageState extends State<TodoListPage> {
                     IconButton(
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(
-                            builder: (context) => const TodoCreateEditPage()
+                            builder: (context) => TodoCreateEditPage(todo: todo,)
                         ));
                       },
                       icon: const Icon(Icons.edit)
