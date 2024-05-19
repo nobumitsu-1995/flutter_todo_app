@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_app/API/todo_collection.dart';
+import 'package:flutter_todo_app/API/todo_service.dart';
 import 'package:flutter_todo_app/model/todo.dart';
 import 'package:flutter_todo_app/pages/todo_create_edit_page.dart';
 import 'package:flutter_todo_app/pages/todo_detail_page.dart';
+
+import '../Component/Dialog.dart';
 
 class TodoListPage extends StatefulWidget {
   const TodoListPage({super.key});
@@ -64,7 +67,14 @@ class _TodoListPageState extends State<TodoListPage> {
                       icon: const Icon(Icons.edit)
                     ),
                     IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        showDialog<void>(
+                          context: context,
+                          builder: (_) {
+                            return DeleteTodoDialog(id: todo.id,);
+                          }
+                        );
+                      },
                       icon: const Icon(Icons.delete)
                     ),
                   ],
