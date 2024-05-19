@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_todo_app/API/todo_collection.dart';
 import 'package:flutter_todo_app/model/todo.dart';
+import 'package:flutter_todo_app/pages/todo_create_edit_page.dart';
 import 'package:flutter_todo_app/pages/todo_detail_page.dart';
 
 class TodoListPage extends StatefulWidget {
@@ -58,7 +59,11 @@ class _TodoListPageState extends State<TodoListPage> {
         }
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(
+            builder: (context) => const TodoCreateEditPage()
+          ));
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
