@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_todo_app/Component/ActionButtons.dart';
 import 'package:flutter_todo_app/model/todo.dart';
 
 class TodoDetailPage extends StatefulWidget {
@@ -46,6 +47,7 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
               const Divider(),
               Text(widget.todo.detail),
               const Divider(),
+              ActionButtons(todo: widget.todo)
             ],
           ),
         ),
