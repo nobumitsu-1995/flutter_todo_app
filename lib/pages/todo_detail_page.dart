@@ -18,7 +18,37 @@ class _TodoDetailPageState extends State<TodoDetailPage> {
         title: const Text('TODO詳細'),
       ),
       body: Center(
-        child: Text(widget.todo.title),
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.8,
+          child: Column(
+            children: [
+              const SizedBox(height: 40,),
+              Row(
+                children: [
+                  const Text('作成日時'),
+                  Text(': ${widget.todo.createdAt.toDate().toString().split(' ')[0]}')
+                ],
+              ),
+              Row(
+                children: [
+                  const Text('更新日時'),
+                  Text(': ${widget.todo.updatedAt != null ? widget.todo.updatedAt!.toDate().toString().split(' ')[0] : '-'}')
+                ],
+              ),
+              const SizedBox(height: 12,),
+              Text(
+                widget.todo.title,
+                style: const TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold
+                ),
+              ),
+              const Divider(),
+              Text(widget.todo.detail),
+              const Divider(),
+            ],
+          ),
+        ),
       ),
     );
   }
