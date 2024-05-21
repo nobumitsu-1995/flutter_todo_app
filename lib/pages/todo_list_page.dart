@@ -18,58 +18,110 @@ class TodoListPage extends StatefulWidget {
 class _TodoListPageState extends State<TodoListPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: const Text('TODO一覧'),
-      ),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: todoCollection.snapshots(),
-        builder: (context, snapshot) {
-          // todo取得中にローディングUIを表示する。
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
-          }
-          // データが空の場合
-          if (!snapshot.hasData) {
-            return const Text('TODOはありません。');
-          }
-          final docs = snapshot.data!.docs;
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          title: const Text('TODO一覧'),
+          bottom: const TabBar(
+            tabs: [
+              Tab(text: '未実施',),
+              Tab(text: '完了済',),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            StreamBuilder<QuerySnapshot>(
+                stream: todoCollection.where('isComplete', isEqualTo: false).snapshots(),
+                builder: (context, snapshot) {
+                  // todo取得中にローディングUIを表示する。
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  }
+                  // データが空の場合
+                  if (!snapshot.hasData) {
+                    return const Text('TODOはありません。');
+                  }
+                  final docs = snapshot.data!.docs;
 
-          return ListView.builder(
-            itemCount: docs.length,
-            itemBuilder: (context, index) {
-              Map<String, dynamic> data = docs[index].data() as Map<String, dynamic>;
-              final Todo todo = Todo(
-                id: docs[index].id,
-                title: data['title'],
-                detail: data['detail'],
-                isComplete: data['isComplete'],
-                createdAt: data['createdAt'],
-                updatedAt: data['updatedAt']
-              );
+                  return ListView.builder(
+                      itemCount: docs.length,
+                      itemBuilder: (context, index) {
+                        Map<String, dynamic> data = docs[index].data() as Map<String, dynamic>;
+                        final Todo todo = Todo(
+                            id: docs[index].id,
+                            title: data['title'],
+                            detail: data['detail'],
+                            isComplete: data['isComplete'],
+                            createdAt: data['createdAt'],
+                            updatedAt: data['updatedAt']
+                        );
 
-              return ListTile(
-                onTap: () {
-                  Navigator.push(context, MaterialPageRoute(
-                    builder: (context) => TodoDetailPage(todo: todo)
-                  ));
-                },
-                title: Text(todo.title),
-                trailing: ActionButtons(todo: todo,),
-              );
-            }
-          );
-        }
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(context, MaterialPageRoute(
-            builder: (context) => const TodoCreateEditPage()
-          ));
-        },
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+                        return ListTile(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(
+                                builder: (context) => TodoDetailPage(todo: todo)
+                            ));
+                          },
+                          title: Text(todo.title),
+                          trailing: ActionButtons(todo: todo,),
+                        );
+                      }
+                  );
+                }
+            ),
+            StreamBuilder<QuerySnapshot>(
+                stream: todoCollection.where('isComplete', isEqualTo: true).snapshots(),
+                builder: (context, snapshot) {
+                  // todo取得中にローディングUIを表示する。
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const CircularProgressIndicator();
+                  }
+                  // データが空の場合
+                  if (!snapshot.hasData) {
+                    return const Text('TODOはありません。');
+                  }
+                  final docs = snapshot.data!.docs;
+
+                  return ListView.builder(
+                      itemCount: docs.length,
+                      itemBuilder: (context, index) {
+                        Map<String, dynamic> data = docs[index].data() as Map<String, dynamic>;
+                        final Todo todo = Todo(
+                            id: docs[index].id,
+                            title: data['title'],
+                            detail: data['detail'],
+                            isComplete: data['isComplete'],
+                            createdAt: data['createdAt'],
+                            updatedAt: data['updatedAt']
+                        );
+
+                        return ListTile(
+                          onTap: () {
+                            Navigator.push(context, MaterialPageRoute(
+                                builder: (context) => TodoDetailPage(todo: todo)
+                            ));
+                          },
+                          title: Text(todo.title),
+                          trailing: ActionButtons(todo: todo,),
+                        );
+                      }
+                  );
+                }
+            ),
+          ]
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) => const TodoCreateEditPage()
+            ));
+          },
+          tooltip: 'Increment',
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }
