@@ -3,12 +3,13 @@ import 'package:flutter_todo_app/API/delete_todo.dart';
 
 class DeleteTodoDialog extends StatelessWidget {
   final String id;
-  const DeleteTodoDialog ({super.key, required this.id});
+  final String title;
+  const DeleteTodoDialog ({super.key, required this.id, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      content: const Text('todoを削除します。'),
+      content: Text('「$title」を削除します。'),
       actions: [
         GestureDetector(
           child: const Text('いいえ'),

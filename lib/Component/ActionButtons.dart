@@ -30,7 +30,7 @@ class _ActionButtonsState extends State<ActionButtons> {
               showDialog<void>(
                   context: context,
                   builder: (_) {
-                    return DeleteTodoDialog(id: widget.todo.id,);
+                    return DeleteTodoDialog(id: widget.todo.id, title: widget.todo.title,);
                   }
               );
             },
