@@ -66,6 +66,12 @@ class _TodoListPageState extends State<TodoListPage> {
                         value: false,
                         onChanged: (bool? value) async{
                           await updateIsComplete(id, true);
+                          final snackBar = SnackBar(
+                            backgroundColor: Colors.blueAccent,
+                            content: Text("${todo.title}を「完了済」にしました。"),
+                          );
+                          if (!context.mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         },
                       ),
                       onTap: () {
@@ -112,6 +118,12 @@ class _TodoListPageState extends State<TodoListPage> {
                         value: true,
                         onChanged: (bool? value) async{
                           await updateIsComplete(id, false);
+                          final snackBar = SnackBar(
+                            backgroundColor: Colors.blueAccent,
+                            content: Text("${todo.title}を「未実施」にしました。"),
+                          );
+                          if (!context.mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(snackBar);
                         },
                       ),
                       onTap: () {
