@@ -68,6 +68,10 @@ class _TodoListPageState extends State<TodoListPage> {
                           await updateIsComplete(id, true);
                           final snackBar = SnackBar(
                             backgroundColor: Colors.blueAccent,
+                            action: SnackBarAction(
+                              label: "閉じる",
+                              onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+                            ),
                             content: Text("${todo.title}を「完了済」にしました。"),
                           );
                           if (!context.mounted) return;
@@ -120,6 +124,10 @@ class _TodoListPageState extends State<TodoListPage> {
                           await updateIsComplete(id, false);
                           final snackBar = SnackBar(
                             backgroundColor: Colors.blueAccent,
+                            action: SnackBarAction(
+                              label: "閉じる",
+                              onPressed: () => ScaffoldMessenger.of(context).hideCurrentSnackBar(),
+                            ),
                             content: Text("${todo.title}を「未実施」にしました。"),
                           );
                           if (!context.mounted) return;
